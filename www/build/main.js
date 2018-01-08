@@ -52,6 +52,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+// import { Http } from '@angular/http';
+// import 'rxjs/add/operator/map';
 var HomePage = (function () {
     function HomePage(fb) {
         var _this = this;
@@ -98,7 +100,36 @@ var HomePage = (function () {
             .then(function (res) {
             console.log(res);
             _this.users = res;
-            console.log("User data " + _this.users);
+            // console.log("User data yy"+this.users);
+            console.log("User data" + JSON.stringify(_this.users));
+            // console.log("User data j"+this.users.json);
+            // Get big profile image
+            _this.getBigProfileImageFbAPI(userid);
+        })
+            .catch(function (e) {
+            console.log(e);
+        });
+    };
+    // getBigProfileImage(usreId) {
+    //   let path = 'https://graph.facebook.com/'+usreId+'/picture?height=720';
+    //   let encodedPath = encodeURI(path);
+    //   let timeoutMS = 10000;
+    //   this.http.get(encodedPath)
+    //       .map(res => res.json()).subscribe(data => {
+    //           let responseData = data;
+    //           console.log('big profile picture : '+responseData);
+    //       },
+    //       err => {
+    //           console.log('error in ETPhoneHome');
+    //       });
+    // }
+    HomePage.prototype.getBigProfileImageFbAPI = function (userId) {
+        var _this = this;
+        this.fb.api("/" + userId + '/picture?height=720', ["public_profile"])
+            .then(function (res) {
+            _this.users.bigPicture = res.data.url;
+            // console.log(res);
+            console.log("profile picture " + JSON.stringify(res));
         })
             .catch(function (e) {
             console.log(e);
@@ -106,7 +137,7 @@ var HomePage = (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\xampp\htdocs\github\ionic-fb-login\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div *ngIf="isLoggedIn; else facebookLogin">\n    <h2>Hi, {{users.name}} ({{users.email}})</h2>\n    <p>\n      Gender: {{users.gender}}\n    </p>\n    <p>\n      <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />\n    </p>\n    <p>\n      <button ion-button icon-right (click)="logout()">\n        Logout\n      </button>\n    </p>\n  </div>\n  <ng-template #facebookLogin>\n    <button ion-button icon-right (click)="login()">\n      Login with\n      <ion-icon name="logo-facebook"></ion-icon>\n    </button>\n  </ng-template>\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\github\ionic-fb-login\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\xampp\htdocs\github\ionicfblogin\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div *ngIf="isLoggedIn; else facebookLogin">\n    <h2>Hi, {{users.name}} ({{users.email}})</h2>\n    <p>\n      Gender: {{users.gender}}\n    </p>\n    <p>\n      <img src="{{users.picture.data.url}}" alt="{{users.name}}" />\n      <!-- <img src="{{\'https://graph.facebook.com/\'+users.picture.data.url+\'/picture?height=720\'}}" alt="{{users.name}}" /> -->\n      <img src="{{users.bigPicture}}" alt="{{users.name}}" />\n    </p>\n    <p>\n      <button ion-button icon-right (click)="logout()">\n        Logout\n      </button>\n    </p>\n  </div>\n  <ng-template #facebookLogin>\n    <button ion-button icon-right (click)="login()">\n      Login with\n      <ion-icon name="logo-facebook"></ion-icon>\n    </button>\n  </ng-template>\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\github\ionicfblogin\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_facebook__["a" /* Facebook */]])
     ], HomePage);
@@ -228,7 +259,7 @@ var MyApp = (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\xampp\htdocs\github\ionic-fb-login\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"C:\xampp\htdocs\github\ionic-fb-login\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\xampp\htdocs\github\ionicfblogin\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"C:\xampp\htdocs\github\ionicfblogin\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);

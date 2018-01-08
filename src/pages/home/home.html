@@ -11,7 +11,9 @@
       Gender: {{users.gender}}
     </p>
     <p>
-      <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />
+      <img src="{{users.picture.data.url}}" alt="{{users.name}}" />
+      <!-- <img src="{{'https://graph.facebook.com/'+users.picture.data.url+'/picture?height=720'}}" alt="{{users.name}}" /> -->
+      <img src="{{users.bigPicture}}" alt="{{users.name}}" />
     </p>
     <p>
       <button ion-button icon-right (click)="logout()">

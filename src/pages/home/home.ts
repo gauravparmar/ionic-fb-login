@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 
+// import { Http } from '@angular/http';
+// import 'rxjs/add/operator/map';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -51,11 +54,46 @@ export class HomePage {
         console.log(res);
         this.users = res;
         
-        console.log("User data "+this.users);
+        // console.log("User data yy"+this.users);
+        console.log("User data"+JSON.stringify(this.users));
+        // console.log("User data j"+this.users.json);
+
+        // Get big profile image
+        this.getBigProfileImageFbAPI(userid);
+
       })
       .catch(e => {
         console.log(e);
       });
+  }
+
+  // getBigProfileImage(usreId) {
+  //   let path = 'https://graph.facebook.com/'+usreId+'/picture?height=720';
+  //   let encodedPath = encodeURI(path);
+  //   let timeoutMS = 10000;
+
+  //   this.http.get(encodedPath)
+  //       .map(res => res.json()).subscribe(data => {
+  //           let responseData = data;
+  //           console.log('big profile picture : '+responseData);
+  //       },
+  //       err => {
+  //           console.log('error in ETPhoneHome');
+  //       });
+  // }
+
+  
+  getBigProfileImageFbAPI(userId) {
+    this.fb.api("/"+userId+'/picture?height=720',["public_profile"])
+    .then(res => {
+
+      this.users.bigPicture=res.data.url;
+      // console.log(res);
+      console.log("profile picture "+JSON.stringify(res));
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
 
 }
