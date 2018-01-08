@@ -1,0 +1,8 @@
+{
+  "name": "ionic-fb-login",
+  "app_id": "5237165b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
